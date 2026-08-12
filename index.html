@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200, initial-scale=1.0">
+    <title>M.S Handmade | إبداعات يدوية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- شاشة الترحيب الفخمة -->
+    <div id="intro-screen">
+        <div class="intro-content">
+            <h1>✨ M.S Handmade ✨</h1>
+            <p>حيث تتحول المشاعر إلى قطع فنية تنبض بالحياة...</p>
+        </div>
+    </div>
+
+    <!-- الشريط العلوي العصري -->
+    <header class="fade-element">
+        <div class="logo">M.S <span>Handmade</span></div>
+        <nav>
+            <a href="#" class="active">الرئيسية</a>
+            <a href="#our-work">أعمالنا المميزة</a>
+            <a href="#about">من نحن</a>
+            <a href="#contact">تواصل معنا</a>
+        </nav>
+    </header>
+
+    <!-- القسم الرئيسي (Hero Section) - منسق وبصورة واحدة بس -->
+    <section class="hero fade-element">
+        <div class="logo-container">
+            <img src="ms.png" alt="M.S Handmade Logo" class="brand-logo">
+        </div>
+        <div class="hero-badge">مصنوع خصيصاً ليناسب ذوقك الرفيع</div>
+        <h1>إبداعات يدوية مصنوعة بكل اتقان</h1>
+        <p>كل قطعة تحكي قصة فريدة، صُممت وأُحيكت بعناية فائقة لتخلد أجمل لحظاتكم.</p>
+        <h4>اكتشفي تشكيلتنا الآن</h4>
+    </section>
+
+    <!-- معرض الأعمال (المنتجات) -->
+    <section id="our-work" class="gallery-section fade-element">
+        <div class="section-header">
+            <h2>✨ لمعة إبداعاتنا المميزة ✨</h2>
+            <button id="show-add-form" class="btn-secondary">+ إضافة منتج جديد للبراند</button>
+        </div>
+
+        <!-- نموذج إضافة منتج (خاص بصاحبة البراند) -->
+        <div id="add-product-form" class="admin-form" style="display: none;">
+            <h3>أضيفي قطعة فنية جديدة للمعرض</h3>
+            <input type="text" id="product-title" placeholder="اسم المنتج (مثلاً: بوكيه ورد فخم)">
+            <input type="text" id="product-desc" placeholder="وصف قصير  ">
+            <input type="file" id="product-img" accept="image/*" style="padding: 10px; background: #fff; border: 1px dashed #b5838d; border-radius: 10px; cursor: pointer;">
+            <button id="save-product" class="btn-primary">نشر في الموقع فوراً</button>
+        </div>
+
+        <!-- شبكة الكروت الفخمة -->
+        <div class="gallery-grid" id="gallery-container">
+            
+            <div class="gallery-item">
+                <div class="item-img-wrapper" style="background-color: #fce4ec; display: flex; align-items: center; justify-content: center; color: #b5838d; font-weight: bold;">
+                    <span>✨ طقم بيبي</span>
+                </div>
+                <div class="item-content">
+                    <h3>طقم بيبي مطرز بالاسم</h3>
+                    <p>تم تنفيذه يدوياً بأجود الخامات خصيصاً لأميركم الصغير.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="item-img-wrapper" style="background-color: #f3e5f5; display: flex; align-items: center; justify-content: center; color: #9c27b0; font-weight: bold;">
+                    <span>🌸 تنسيق ورد</span>
+                </div>
+                <div class="item-content">
+                    <h3>تنسيق ورد يدوي</h3>
+                    <p>قطع فنية منسقة بعناية لتناسب أرقى المناسبات السعيدة.</p>
+                </div>
+            </div>
+
+            </div> <!-- قفلة gallery-grid -->
+    </section> <!-- قفلة our-work section -->
+
+    <!-- نافذة عرض الصورة الكبيرة (Lightbox Modal) -->
+    <div id="imageModal">
+        <img id="modalContent" alt="صورة المنتج المكبرة">
+        <div id="caption">اضغط في أي مكان لإغلاق الصورة</div>
+    </div>
+
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
