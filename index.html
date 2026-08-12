@@ -2,14 +2,19 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M.S Handmade | إبداعات يدوية</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- مكتبة Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
 
-    <!-- شاشة الترحيب الفخمة -->
+    <!-- شاشة الترحيب -->
     <div id="intro-screen">
         <div class="intro-content">
             <h1>✨ M.S Handmade ✨</h1>
@@ -17,79 +22,130 @@
         </div>
     </div>
 
-    <!-- الشريط العلوي العصري -->
+    <!-- الشريط العلوي -->
     <header class="fade-element">
-        <div class="logo">M.S <span>Handmade</span></div>
+
+        <div class="logo">
+            M.S <span>Handmade</span>
+        </div>
+
         <nav>
             <a href="#" class="active">الرئيسية</a>
-            <a href="#our-work">أعمالنا المميزة</a>
+            <a href="#our-work">أعمالنا</a>
             <a href="#about">من نحن</a>
             <a href="#contact">تواصل معنا</a>
         </nav>
+
     </header>
 
-    <!-- القسم الرئيسي (Hero Section) - منسق وبصورة واحدة بس -->
+    <!-- شريط الأدمن -->
+    <div id="admin-bar" style="text-align:center;margin:20px;">
+
+        <button id="login-btn" class="btn-primary">
+            تسجيل دخول الأدمن
+        </button>
+
+        <button id="logout-btn"
+                class="btn-secondary"
+                style="display:none;">
+            تسجيل خروج
+        </button>
+
+    </div>
+
+    <!-- القسم الرئيسي -->
     <section class="hero fade-element">
+
         <div class="logo-container">
-            <img src="ms.png" alt="M.S Handmade Logo" class="brand-logo">
+            <img src="ms.png"
+                 class="brand-logo"
+                 alt="Logo">
         </div>
-        <div class="hero-badge">مصنوع خصيصاً ليناسب ذوقك الرفيع</div>
-        <h1>إبداعات يدوية مصنوعة بكل اتقان</h1>
-        <p>كل قطعة تحكي قصة فريدة، صُممت وأُحيكت بعناية فائقة لتخلد أجمل لحظاتكم.</p>
-        <h4>اكتشفي تشكيلتنا الآن</h4>
+
+        <div class="hero-badge">
+            مصنوع خصيصاً ليناسب ذوقك الرفيع
+        </div>
+
+        <h1>إبداعات يدوية مصنوعة بكل إتقان</h1>
+
+        <p>
+            كل قطعة تحكي قصة فريدة،
+            صُممت وأُحيكت بعناية فائقة.
+        </p>
+
     </section>
 
-    <!-- معرض الأعمال (المنتجات) -->
-    <section id="our-work" class="gallery-section fade-element">
+    <!-- المنتجات -->
+    <section id="our-work"
+             class="gallery-section fade-element">
+
         <div class="section-header">
-            <h2>✨ لمعة إبداعاتنا المميزة ✨</h2>
-            <button id="show-add-form" class="btn-secondary">+ إضافة منتج جديد للبراند</button>
+
+            <h2>
+                ✨ لمعة إبداعاتنا ✨
+            </h2>
+
+            <button id="show-add-form"
+                    class="btn-secondary"
+                    style="display:none;">
+
+                + إضافة منتج جديد
+
+            </button>
+
         </div>
 
-        <!-- نموذج إضافة منتج (خاص بصاحبة البراند) -->
-        <div id="add-product-form" class="admin-form" style="display: none;">
-            <h3>أضيفي قطعة فنية جديدة للمعرض</h3>
-            <input type="text" id="product-title" placeholder="اسم المنتج (مثلاً: بوكيه ورد فخم)">
-            <input type="text" id="product-desc" placeholder="وصف قصير  ">
-            <input type="file" id="product-img" accept="image/*" style="padding: 10px; background: #fff; border: 1px dashed #b5838d; border-radius: 10px; cursor: pointer;">
-            <button id="save-product" class="btn-primary">نشر في الموقع فوراً</button>
+        <!-- نموذج إضافة المنتج -->
+        <div id="add-product-form"
+             class="admin-form"
+             style="display:none;">
+
+            <h3>إضافة منتج</h3>
+
+            <input
+                type="text"
+                id="product-title"
+                placeholder="اسم المنتج">
+
+            <input
+                type="text"
+                id="product-desc"
+                placeholder="وصف المنتج">
+
+            <input
+                type="file"
+                id="product-img"
+                accept="image/*">
+
+            <button id="save-product"
+                    class="btn-primary">
+
+                نشر المنتج
+
+            </button>
+
         </div>
 
-        <!-- شبكة الكروت الفخمة -->
-        <div class="gallery-grid" id="gallery-container">
-            
-            <div class="gallery-item">
-                <div class="item-img-wrapper" style="background-color: #fce4ec; display: flex; align-items: center; justify-content: center; color: #b5838d; font-weight: bold;">
-                    <span>✨ طقم بيبي</span>
-                </div>
-                <div class="item-content">
-                    <h3>طقم بيبي مطرز بالاسم</h3>
-                    <p>تم تنفيذه يدوياً بأجود الخامات خصيصاً لأميركم الصغير.</p>
-                </div>
-            </div>
+        <!-- المنتجات -->
+        <div id="gallery-container"
+             class="gallery-grid">
 
-            <div class="gallery-item">
-                <div class="item-img-wrapper" style="background-color: #f3e5f5; display: flex; align-items: center; justify-content: center; color: #9c27b0; font-weight: bold;">
-                    <span>🌸 تنسيق ورد</span>
-                </div>
-                <div class="item-content">
-                    <h3>تنسيق ورد يدوي</h3>
-                    <p>قطع فنية منسقة بعناية لتناسب أرقى المناسبات السعيدة.</p>
-                </div>
-            </div>
+        </div>
 
-            </div> <!-- قفلة gallery-grid -->
-    </section> <!-- قفلة our-work section -->
+    </section>
 
-    <!-- نافذة عرض الصورة الكبيرة (Lightbox Modal) -->
+    <!-- نافذة تكبير الصورة -->
     <div id="imageModal">
-        <img id="modalContent" alt="صورة المنتج المكبرة">
-        <div id="caption">اضغط في أي مكان لإغلاق الصورة</div>
+
+        <img id="modalContent">
+
+        <div id="caption">
+            اضغط في أي مكان للإغلاق
+        </div>
+
     </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js"></script>
 
-
+    <script src="script.js"></script>
 
 </body>
 </html>

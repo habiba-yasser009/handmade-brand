@@ -1,3 +1,7 @@
+// ===============================
+// Supabase
+// ===============================
+
 const SUPABASE_URL = "https://xqsdrgtlkwpzzstoches.supabase.co";
 const SUPABASE_KEY = "sb_publishable_a-DKrUN4Dj8Xq14m3sNvfQ_RWp1YaII";
 
@@ -7,11 +11,15 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
-document.addEventListener("DOMContentLoaded", () => {
+// ===============================
+// عند تحميل الموقع
+// ===============================
 
-    // =========================
+document.addEventListener("DOMContentLoaded", async () => {
+
+    // -------------------------------
     // شاشة الترحيب
-    // =========================
+    // -------------------------------
 
     const introScreen = document.getElementById("intro-screen");
     const fadeElements = document.querySelectorAll(".fade-element");
@@ -23,92 +31,225 @@ document.addEventListener("DOMContentLoaded", () => {
             introScreen.style.visibility = "hidden";
         }
 
-        fadeElements.forEach((el, index) => {
+        fadeElements.forEach((element, index) => {
             setTimeout(() => {
-                el.classList.add("show");
+                element.classList.add("show");
             }, index * 200);
         });
 
     }, 2000);
 
 
-    // =========================
-    // عناصر الصفحة
-    // =========================
+    // -------------------------------
+    // عناصر الأدمن
+    // -------------------------------
 
-    const showAddFormBtn =
-        document.getElementById("show-add-form");
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const addFormBtn = document.getElementById("show-add-form");
+    const addForm = document.getElementById("add-product-form");
 
-    const addProductForm =
-        document.getElementById("add-product-form");
 
-    const saveProductBtn =
-        document.getElementById("save-product");
+    // -------------------------------
+    // إخفاء أدوات الأدمن في البداية
+    // -------------------------------
+
+    function hideAdminControls() {
+
+        if (addFormBtn) {
+            addFormBtn.style.display = "none";
+        }
+
+        if (addForm) {
+            addForm.style.display = "none";
+        }
+
+        if (logoutBtn) {
+            logoutBtn.style.display = "none";
+        }
+
+        if (loginBtn) {
+            loginBtn.style.display = "inline-block";
+        }
+    }
+
+
+    // -------------------------------
+    // إظهار أدوات الأدمن
+    // -------------------------------
+
+    function showAdminControls() {
+
+        if (addFormBtn) {
+            addFormBtn.style.display = "inline-block";
+        }
+
+        if (logoutBtn) {
+            logoutBtn.style.display = "inline-block";
+        }
+
+        if (loginBtn) {
+            loginBtn.style.display = "none";
+        }
+    }
+
+
+    // -------------------------------
+    // معرفة هل الأدمن مسجل دخول
+    // -------------------------------
+
+    async function checkUser() {
+
+        const { data, error } = await supabaseClient.auth.getUser();
+
+        if (error || !data.user) {
+            hideAdminControls();
+            return false;
+        }
+
+        showAdminControls();
+        return true;
+    }
+
+
+    // -------------------------------
+    // تسجيل الدخول
+    // -------------------------------
+
+    if (loginBtn) {
+
+        loginBtn.addEventListener("click", async () => {
+
+            const email = prompt("اكتبي البريد الإلكتروني للأدمن:");
+
+            if (!email) {
+                return;
+            }
+
+            const password = prompt("اكتبي كلمة المرور:");
+
+            if (!password) {
+                return;
+            }
+
+
+            const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+
+            if (error) {
+
+                alert("فشل تسجيل الدخول:\n" + error.message);
+
+                return;
+            }
+
+
+            alert("تم تسجيل الدخول بنجاح 🔐✨");
+
+            showAdminControls();
+
+            await renderProducts();
+        });
+    }
+
+
+    // -------------------------------
+    // تسجيل الخروج
+    // -------------------------------
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener("click", async () => {
+
+            const { error } =
+                await supabaseClient.auth.signOut();
+
+            if (error) {
+
+                alert("حدث خطأ أثناء تسجيل الخروج");
+
+                return;
+            }
+
+            hideAdminControls();
+
+            alert("تم تسجيل الخروج 👋");
+
+            await renderProducts();
+        });
+    }
+
+
+    // -------------------------------
+    // زر إضافة المنتج
+    // -------------------------------
+
+    if (addFormBtn && addForm) {
+
+        addFormBtn.addEventListener("click", () => {
+
+            if (
+                addForm.style.display === "none" ||
+                addForm.style.display === ""
+            ) {
+
+                addForm.style.display = "block";
+
+                addFormBtn.textContent = "إغلاق النموذج";
+
+            } else {
+
+                addForm.style.display = "none";
+
+                addFormBtn.textContent =
+                    "+ إضافة منتج جديد";
+            }
+        });
+    }
+
+
+    // ===============================
+    // عرض المنتجات
+    // ===============================
 
     const galleryContainer =
         document.getElementById("gallery-container");
 
 
-    // =========================
-    // فتح وإغلاق نموذج إضافة المنتج
-    // =========================
+    async function renderProducts() {
 
-    if (showAddFormBtn && addProductForm) {
-
-        showAddFormBtn.addEventListener("click", () => {
-
-            if (
-                addProductForm.style.display === "none" ||
-                addProductForm.style.display === ""
-            ) {
-
-                addProductForm.style.display = "block";
-
-                showAddFormBtn.textContent =
-                    "إغلاق النموذج";
-
-            } else {
-
-                addProductForm.style.display = "none";
-
-                showAddFormBtn.textContent =
-                    "+ إضافة منتج جديد للبراند";
-            }
-
-        });
-
-    }
+        if (!galleryContainer) {
+            return;
+        }
 
 
-    // =========================
-    // تحميل المنتجات من Supabase
-    // =========================
+        galleryContainer.innerHTML = `
+            <p style="text-align:center;">
+                جاري تحميل المنتجات...
+            </p>
+        `;
 
-    async function loadProducts() {
 
-        if (!galleryContainer) return;
-
-        galleryContainer.innerHTML = "";
-
-        const { data, error } = await supabaseClient
-            .from("products")
-            .select("*")
-            .order("created_at", {
-                ascending: false
-            });
+        const { data: products, error } =
+            await supabaseClient
+                .from("products")
+                .select("*")
+                .order("created_at", {
+                    ascending: false
+                });
 
 
         if (error) {
 
-            console.error("LOAD ERROR:", error);
+            console.error(error);
 
             galleryContainer.innerHTML = `
-                <p style="
-                    text-align:center;
-                    color:#b5838d;
-                    grid-column:1/-1;
-                ">
-                    حدث خطأ أثناء تحميل المنتجات.
+                <p style="text-align:center;color:red;">
+                    حدث خطأ أثناء تحميل المنتجات
                 </p>
             `;
 
@@ -116,15 +257,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        if (!data || data.length === 0) {
+        galleryContainer.innerHTML = "";
+
+
+        if (!products || products.length === 0) {
 
             galleryContainer.innerHTML = `
-                <p style="
-                    text-align:center;
-                    color:#b5838d;
-                    grid-column:1/-1;
-                ">
-                    لا توجد منتجات مضافة حتى الآن ✨
+                <p style="text-align:center;">
+                    لا توجد منتجات حتى الآن 🌸
                 </p>
             `;
 
@@ -132,18 +272,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        data.forEach((product) => {
-            createProductCard(product);
+        const { data: userData } =
+            await supabaseClient.auth.getUser();
+
+        const isAdmin = !!userData.user;
+
+
+        products.forEach((product) => {
+
+            createProductCard(product, isAdmin);
+
         });
-
     }
 
 
-    // =========================
+    // ===============================
     // إنشاء كارت المنتج
-    // =========================
+    // ===============================
 
-    function createProductCard(product) {
+    function createProductCard(product, isAdmin) {
 
         const newCard =
             document.createElement("div");
@@ -152,8 +299,11 @@ document.addEventListener("DOMContentLoaded", () => {
             "gallery-item fade-element show";
 
 
-        const imgSrc =
-            product.image_url || "ms.png";
+        const imageUrl =
+            product.image_url &&
+            product.image_url.trim() !== ""
+                ? product.image_url
+                : "ms.png";
 
 
         newCard.innerHTML = `
@@ -172,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
             >
 
                 <img
-                    src="${imgSrc}"
+                    src="${imageUrl}"
                     alt="${product.name || "منتج"}"
                     class="clickable-img"
                     style="
@@ -189,7 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="item-content">
 
                 <h3>
-                    ${product.name || ""}
+                    ${product.name || "منتج"}
                 </h3>
 
                 <p>
@@ -256,89 +406,53 @@ document.addEventListener("DOMContentLoaded", () => {
                         زوروا صفحتنا على الفيسبوك
                     </a>
 
-
-                    <button
-                        class="btn-delete"
-                        style="
-                            margin-top:10px;
-                            background-color:#ff6b6b;
-                            color:white;
-                            border:none;
-                            padding:5px 12px;
-                            border-radius:12px;
-                            cursor:pointer;
-                            font-size:.8rem;
-                            font-weight:600;
-                        "
-                    >
-                        حذف المنتج
-                    </button>
-
                 </div>
 
             </div>
         `;
 
 
-        // =========================
-        // تكبير الصورة
-        // =========================
+        // ===============================
+        // زر الحذف للأدمن فقط
+        // ===============================
 
-        const imgElement =
-            newCard.querySelector(".clickable-img");
+        if (isAdmin) {
 
-        const modal =
-            document.getElementById("imageModal");
+            const deleteButton =
+                document.createElement("button");
 
-        const modalImg =
-            document.getElementById("modalContent");
+            deleteButton.textContent =
+                "حذف المنتج";
 
+            deleteButton.className =
+                "btn-delete";
 
-        if (imgElement && modal && modalImg) {
-
-            imgElement.addEventListener("click", () => {
-
-                modal.style.display = "block";
-
-                modalImg.src = imgSrc;
-
-            });
-
-        }
-
-
-        if (modal) {
-
-            modal.addEventListener("click", () => {
-
-                modal.style.display = "none";
-
-            });
-
-        }
+            deleteButton.style.cssText = `
+                margin-top:10px;
+                background-color:#ff6b6b;
+                color:white;
+                border:none;
+                padding:5px 12px;
+                border-radius:12px;
+                cursor:pointer;
+                font-size:.8rem;
+                font-weight:600;
+            `;
 
 
-        // =========================
-        // حذف المنتج
-        // =========================
-
-        const deleteBtn =
-            newCard.querySelector(".btn-delete");
-
-
-        if (deleteBtn) {
-
-            deleteBtn.addEventListener(
+            deleteButton.addEventListener(
                 "click",
                 async () => {
 
                     const confirmDelete =
                         confirm(
-                            "هل أنتِ متأكدة من حذف هذا المنتج من الموقع؟"
+                            "هل أنتِ متأكدة من حذف هذا المنتج؟"
                         );
 
 
-                    if (!confirmDelete) return;
+                    if (!confirmDelete) {
+                        return;
+                    }
 
 
                     const { error } =
@@ -350,38 +464,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (error) {
 
-                        console.error(
-                            "DELETE ERROR:",
-                            error
+                        alert(
+                            "فشل حذف المنتج:\n" +
+                            error.message
                         );
-
-                        alert(error.message);
 
                         return;
                     }
 
 
-                    alert(
-                        "تم حذف المنتج بنجاح 🗑️"
-                    );
+                    alert("تم حذف المنتج بنجاح 🗑️");
 
-
-                    loadProducts();
-
+                    await renderProducts();
                 }
             );
 
+
+            newCard
+                .querySelector(".item-content")
+                .appendChild(deleteButton);
+        }
+
+
+        // ===============================
+        // تكبير الصورة
+        // ===============================
+
+        const image =
+            newCard.querySelector(".clickable-img");
+
+        const modal =
+            document.getElementById("imageModal");
+
+        const modalImage =
+            document.getElementById("modalContent");
+
+
+        if (image && modal && modalImage) {
+
+            image.addEventListener("click", () => {
+
+                modal.style.display = "block";
+
+                modalImage.src = imageUrl;
+            });
+
+
+            modal.addEventListener("click", () => {
+
+                modal.style.display = "none";
+
+            });
         }
 
 
         galleryContainer.appendChild(newCard);
-
     }
 
 
-    // =========================
-    // إضافة منتج
-    // =========================
+    // ===============================
+    // إضافة المنتج
+    // ===============================
+
+    const saveProductBtn =
+        document.getElementById("save-product");
+
 
     if (saveProductBtn) {
 
@@ -389,15 +536,33 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             async () => {
 
+                // التأكد من تسجيل الدخول
+
+                const { data: userData } =
+                    await supabaseClient.auth.getUser();
+
+
+                if (!userData.user) {
+
+                    alert(
+                        "لازم تسجلي دخول الأدمن الأول 🔐"
+                    );
+
+                    return;
+                }
+
+
                 const titleInput =
                     document.getElementById(
                         "product-title"
                     );
 
+
                 const descInput =
                     document.getElementById(
                         "product-desc"
                     );
+
 
                 const imgInput =
                     document.getElementById(
@@ -408,31 +573,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 const title =
                     titleInput.value.trim();
 
+
                 const desc =
                     descInput.value.trim();
+
 
                 const file =
                     imgInput.files[0];
 
 
-                // =========================
-                // التحقق من البيانات
-                // =========================
-
-                if (!title) {
+                if (!title || !desc) {
 
                     alert(
-                        "من فضلك اكتبي اسم المنتج."
-                    );
-
-                    return;
-                }
-
-
-                if (!desc) {
-
-                    alert(
-                        "من فضلك اكتبي وصف المنتج."
+                        "من فضلك اكتبي اسم المنتج والوصف"
                     );
 
                     return;
@@ -442,197 +595,138 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!file) {
 
                     alert(
-                        "من فضلك اختاري صورة للمنتج."
+                        "من فضلك اختاري صورة المنتج"
                     );
 
                     return;
                 }
 
 
-                if (file.size > 5 * 1024 * 1024) {
+                // ===============================
+                // رفع الصورة إلى Storage
+                // ===============================
+
+                const fileName =
+                    Date.now() +
+                    "_" +
+                    file.name.replace(
+                        /[^a-zA-Z0-9.-]/g,
+                        "_"
+                    );
+
+
+                const filePath =
+                    fileName;
+
+
+                const { error: uploadError } =
+                    await supabaseClient.storage
+                        .from("products")
+                        .upload(
+                            filePath,
+                            file,
+                            {
+                                cacheControl: "3600",
+                                upsert: false
+                            }
+                        );
+
+
+                if (uploadError) {
+
+                    console.error(uploadError);
 
                     alert(
-                        "حجم الصورة يجب أن يكون أقل من 5MB."
+                        "فشل رفع الصورة إلى Supabase:\n" +
+                        uploadError.message
                     );
 
                     return;
                 }
 
 
-                saveProductBtn.disabled = true;
+                // ===============================
+                // الحصول على رابط الصورة
+                // ===============================
 
-                saveProductBtn.textContent =
-                    "جاري النشر...";
-
-
-                try {
-
-                    // =========================
-                    // رفع الصورة إلى Storage
-                    // =========================
-
-                    const fileExtension =
-                        file.name
-                            .split(".")
-                            .pop();
+                const { data: publicUrlData } =
+                    supabaseClient.storage
+                        .from("products")
+                        .getPublicUrl(filePath);
 
 
-                    const fileName =
-                        `${Date.now()}-${Math.random()
-                            .toString(36)
-                            .substring(2)}.${fileExtension}`;
+                const imageUrl =
+                    publicUrlData.publicUrl;
 
 
-                    const { error: uploadError } =
-                        await supabaseClient
-                            .storage
-                            .from("products")
-                            .upload(
-                                fileName,
-                                file,
-                                {
-                                    cacheControl: "3600",
-                                    upsert: false
-                                }
-                            );
+                // ===============================
+                // حفظ المنتج في جدول products
+                // ===============================
+
+                const { error: insertError } =
+                    await supabaseClient
+                        .from("products")
+                        .insert([
+                            {
+                                name: title,
+                                description: desc,
+                                image_url: imageUrl,
+                                whatsapp: "201556051932",
+                                facebook:
+                                    "https://www.facebook.com/share/g/19DZh5pJpd/"
+                            }
+                        ]);
 
 
-                    if (uploadError) {
+                if (insertError) {
 
-                        console.error(
-                            "UPLOAD ERROR:",
-                            uploadError
-                        );
-
-                        alert(
-                            "خطأ رفع الصورة: " +
-                            uploadError.message
-                        );
-
-                        return;
-                    }
-
-
-                    // =========================
-                    // رابط الصورة
-                    // =========================
-
-                    const { data: publicUrlData } =
-                        supabaseClient
-                            .storage
-                            .from("products")
-                            .getPublicUrl(
-                                fileName
-                            );
-
-
-                    const imageUrl =
-                        publicUrlData.publicUrl;
-
-
-                    console.log(
-                        "IMAGE URL:",
-                        imageUrl
-                    );
-
-
-                    // =========================
-                    // حفظ المنتج في الجدول
-                    // =========================
-
-                    const { error: insertError } =
-                        await supabaseClient
-                            .from("products")
-                            .insert([
-                                {
-                                    name: title,
-                                    description: desc,
-                                    image_url: imageUrl
-                                }
-                            ]);
-
-
-                    // =========================
-                    // إظهار الخطأ الحقيقي
-                    // =========================
-
-                    if (insertError) {
-
-                        console.error(
-                            "INSERT ERROR:",
-                            insertError
-                        );
-
-                        alert(
-                            "خطأ حفظ المنتج:\n\n" +
-                            insertError.message
-                        );
-
-                        return;
-                    }
-
-
-                    // =========================
-                    // نجاح العملية
-                    // =========================
-
-                    titleInput.value = "";
-
-                    descInput.value = "";
-
-                    imgInput.value = "";
-
-
-                    addProductForm.style.display =
-                        "none";
-
-
-                    showAddFormBtn.textContent =
-                        "+ إضافة منتج جديد للبراند";
-
+                    console.error(insertError);
 
                     alert(
-                        "تم نشر المنتج بنجاح! ✨"
+                        "فشل حفظ المنتج:\n" +
+                        insertError.message
                     );
 
-
-                    loadProducts();
-
+                    return;
                 }
 
-                catch (error) {
 
-                    console.error(
-                        "GENERAL ERROR:",
-                        error
-                    );
+                // ===============================
+                // نجاح
+                // ===============================
 
-                    alert(
-                        error.message
-                    );
+                alert(
+                    "تم نشر المنتج بنجاح ✨"
+                );
 
-                }
 
-                finally {
+                titleInput.value = "";
 
-                    saveProductBtn.disabled =
-                        false;
+                descInput.value = "";
 
-                    saveProductBtn.textContent =
-                        "نشر في الموقع فوراً";
+                imgInput.value = "";
 
-                }
 
+                addForm.style.display = "none";
+
+                addFormBtn.textContent =
+                    "+ إضافة منتج جديد";
+
+
+                await renderProducts();
             }
         );
-
     }
 
 
-    // =========================
+    // ===============================
     // تشغيل الموقع
-    // =========================
+    // ===============================
 
-    loadProducts();
+    hideAdminControls();
+
+    await checkUser();
+
+    await renderProducts();
 
 });
