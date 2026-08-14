@@ -1,3 +1,7 @@
+/* ========================================
+   GLOBAL
+======================================== */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -535,6 +539,7 @@ nav a.active::after {
 
     gap: 25px;
 }
+
 .feature-card {
     width: 100%;
 
@@ -946,7 +951,8 @@ nav a.active::after {
         background 0.3s ease;
 }
 
-.btn-delete:hover { background: #965f6b;
+.btn-delete:hover {
+    background: #965f6b;
 
     transform: translateY(-2px);
 }
@@ -1333,7 +1339,7 @@ nav a.active::after {
         width: 100%;
 
         padding: 70px 15px;
-        }
+    }
 
     .about-content {
         width: 100%;
@@ -1575,4 +1581,467 @@ input:focus-visible {
 
         transition-duration: 0.01ms !important;
     }
+}/* ========================================
+   PRODUCT SEARCH & FILTER
+======================================== */
+
+.product-tools {
+    width: 100%;
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 15px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+
+/* ========================================
+   SEARCH BOX
+======================================== */
+
+.search-box {
+    width: 100%;
+    max-width: 600px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+}
+
+
+.search-box input {
+    width: 100%;
+
+    padding: 15px 50px 15px 20px;
+
+    border: 2px solid #e8c4cc;
+    border-radius: 30px;
+
+    background: #fffafa;
+
+    color: #5c4a4d;
+
+    font-family: inherit;
+    font-size: 16px;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.search-box input::placeholder {
+    color: #a98f94;
+}
+
+
+.search-box input:focus {
+    border-color: #b5838d;
+
+    box-shadow:
+        0 0 0 4px rgba(181, 131, 141, 0.12);
+}
+
+
+/* زرار مسح البحث */
+
+#clear-search {
+    position: absolute;
+
+    left: 12px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f5dce1;
+
+    color: #9c6570;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+#clear-search:hover {
+    background: #e8c4cc;
+
+    transform: scale(1.08);
+}
+
+
+/* ========================================
+   FILTER BUTTONS
+======================================== */
+
+.product-filters {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+
+.filter-btn {
+    border: 1px solid #d9aeb8;
+
+    background: #fffafa;
+
+    color: #8d626b;
+
+    padding: 9px 20px;
+
+    border-radius: 25px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.filter-btn:hover {
+    background: #fbe7ec;
+
+    color: #9c6570;
+
+    transform: translateY(-2px);
+}
+
+
+.filter-btn.active {
+    background: #b5838d;
+
+    color: white;
+
+    border-color: #b5838d;
+
+    box-shadow:
+        0 5px 15px rgba(181, 131, 141, 0.2);
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 650px) {
+
+    .product-tools {
+        margin: 20px auto;
+
+        padding: 0 12px;
+
+        gap: 15px;
+    }
+
+
+    .search-box {
+        max-width: 100%;
+    }
+
+
+    .search-box input {
+        font-size: 14px;
+
+        padding: 13px 45px 13px 18px;
+    }
+
+
+    .product-filters {
+        width: 100%;
+
+        gap: 8px;
+    }
+
+
+    .filter-btn {
+        padding: 8px 15px;
+
+        font-size: 13px;
+    }
+
+}/* ========================================
+   FINAL HEADER FIX
+======================================== */
+
+/* زرار القائمة مخفي على الكمبيوتر */
+.menu-toggle {
+    display: none;
+
+    border: none;
+    background: transparent;
+
+    color: #8f5966;
+
+    font-size: 28px;
+    cursor: pointer;
+
+    padding: 5px;
+
+    line-height: 1;
+}
+
+
+/* Header */
+
+header {
+    position: sticky;
+    top: 0;
+
+    width: 100%;
+    min-height: 72px;
+
+    padding: 12px 5%;
+
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: rgba(255, 249, 250, 0.96);
+
+    backdrop-filter: blur(10px);
+
+    z-index: 1000;
+}
+
+
+/* Logo */
+
+header .logo {
+    display: block;
+
+    flex-shrink: 0;
+
+    color: #b5838d;
+
+    font-size: 28px;
+    font-weight: 900;
+
+    white-space: nowrap;
+}
+
+header .logo span {
+    color: #8f5966;
+
+    font-size: 20px;
+
+    font-weight: 700;
+}
+
+
+/* Navigation */
+
+header nav {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 35px;
+
+    margin: 0;
+}
+
+
+/* ========================================
+   HERO CENTER FIX
+======================================== */
+
+.hero {
+    width: 100%;
+
+    min-height: 85vh;
+
+    padding: 70px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    position: relative;
+}
+
+
+/* كل عناصر الـHero في المنتصف */
+
+.hero .logo-container,
+.hero .hero-badge,
+.hero h1,
+.hero > p,
+.hero .hero-button {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Logo */
+
+.hero .logo-container {
+    width: 250px;
+    max-width: 70vw;
+
+    margin-bottom: 25px;
+}
+
+
+/* ========================================
+   MOBILE HEADER
+======================================== */
+
+@media (max-width: 650px) {
+
+    header {
+        min-height: 65px;
+
+        padding: 12px 18px;
+
+        flex-direction: row;
+
+        gap: 10px;
+    }
+
+
+    /* إظهار زرار القائمة */
+
+    .menu-toggle {
+        display: block;
+
+        order: 1;
+    }
+
+
+    /* اللوجو */
+
+    header .logo {
+        font-size: 22px;
+
+        order: 2;
+    }
+
+
+    header .logo span {
+        font-size: 16px;
+    }
+
+
+    /* القائمة */
+
+    header nav {
+        position: absolute;
+
+        top: 65px;
+        right: 12px;
+        left: 12px;
+
+        width: auto;
+
+        padding: 15px;
+
+        display: none;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+        background: rgba(255, 249, 250, 0.98);
+
+        border-radius: 0 0 20px 20px;
+
+        box-shadow:
+            0 10px 25px rgba(181, 131, 141, 0.15);
+    }
+
+
+    /* لما القائمة تفتح */
+
+    header nav.open {
+        display: flex;
+    }
+
+
+    header nav a {
+        width: 100%;
+
+        padding: 12px;
+
+        text-align: center;
+
+        border-radius: 12px;
+    }
+
+
+    header nav a:hover {
+        background: #fbe0e7;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        min-height: calc(100vh - 65px);
+
+        padding: 50px 18px;
+    }
+
+
+    .hero .logo-container {
+        width: 210px;
+        max-width: 70vw;
+    }
+
+
+    .hero h1 {
+        width: 100%;
+
+        font-size: 34px;
+
+        text-align: center;
+    }
+
+
+    .hero > p {
+        width: 100%;
+
+        text-align: center;
+    }
+
 }
