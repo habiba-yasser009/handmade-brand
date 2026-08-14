@@ -1,7 +1,3 @@
-/* ========================================
-   GLOBAL
-======================================== */
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -539,7 +535,6 @@ nav a.active::after {
 
     gap: 25px;
 }
-
 .feature-card {
     width: 100%;
 
@@ -951,8 +946,7 @@ nav a.active::after {
         background 0.3s ease;
 }
 
-.btn-delete:hover {
-    background: #965f6b;
+.btn-delete:hover { background: #965f6b;
 
     transform: translateY(-2px);
 }
@@ -1339,7 +1333,7 @@ nav a.active::after {
         width: 100%;
 
         padding: 70px 15px;
-    }
+        }
 
     .about-content {
         width: 100%;
