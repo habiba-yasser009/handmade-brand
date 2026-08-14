@@ -1,151 +1,565 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="M.S Handmade - إبداعات يدوية مصنوعة بعناية وحب، وتصميمات مميزة تناسب ذوقك.">
+
+    <meta name="keywords"
+          content="هاند ميد, handmade, إبداعات يدوية, هدايا, تطريز, M.S Handmade">
+
+    <meta name="author"
+          content="M.S Handmade">
+
+    <meta name="theme-color"
+          content="#b5838d">
+
     <title>M.S Handmade | إبداعات يدوية</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
 
-    <!-- مكتبة Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
 </head>
+
 
 <body>
 
+    <!-- ============================= -->
     <!-- شاشة الترحيب -->
+    <!-- ============================= -->
+
     <div id="intro-screen">
+
         <div class="intro-content">
-            <h1>✨ M.S Handmade ✨</h1>
-            <p>حيث تتحول المشاعر إلى قطع فنية تنبض بالحياة...</p>
+
+            <h1>
+                ✨ M.S Handmade ✨
+            </h1>
+
+            <p>
+                حيث تتحول المشاعر إلى قطع فنية تنبض بالحياة...
+            </p>
+
         </div>
+
     </div>
 
-    <!-- الشريط العلوي -->
+
+    <!-- ============================= -->
+    <!-- Header -->
+    <!-- ============================= -->
+
     <header class="fade-element">
 
         <div class="logo">
-            M.S <span>Handmade</span>
+
+            M.S
+            <span>Handmade</span>
+
         </div>
 
-        <nav>
-            <a href="#" class="active">الرئيسية</a>
-            <a href="#our-work">أعمالنا</a>
-            <a href="#about">من نحن</a>
-            <a href="#contact">تواصل معنا</a>
+
+        <nav aria-label="القائمة الرئيسية">
+
+            <a href="#home"
+               class="active">
+                الرئيسية
+            </a>
+
+            <a href="#our-work">
+                أعمالنا
+            </a>
+
+            <a href="#about">
+                من نحن
+            </a>
+
+            <a href="#contact">
+                تواصل معنا
+            </a>
+
         </nav>
 
     </header>
 
-    <!-- شريط الأدمن -->
-    <div id="admin-bar" style="text-align:center;margin:20px;">
 
-        <button id="login-btn" class="btn-primary">
+    <!-- ============================= -->
+    <!-- Admin -->
+    <!-- ============================= -->
+
+    <div id="admin-bar"
+         class="admin-bar">
+
+        <button
+            id="login-btn"
+            class="btn-primary">
+
             تسجيل دخول الأدمن
+
         </button>
 
-        <button id="logout-btn"
-                class="btn-secondary"
-                style="display:none;">
+
+        <button
+            id="logout-btn"
+            class="btn-secondary"
+            style="display:none;">
+
             تسجيل خروج
+
         </button>
 
     </div>
 
-    <!-- القسم الرئيسي -->
-    <section class="hero fade-element">
 
-        <div class="logo-container">
-            <img src="ms.png"
-                 class="brand-logo"
-                 alt="Logo">
-        </div>
+    <main id="home">
 
-        <div class="hero-badge">
-            مصنوع خصيصاً ليناسب ذوقك الرفيع
-        </div>
 
-        <h1>إبداعات يدوية مصنوعة بكل إتقان</h1>
+        <!-- ============================= -->
+        <!-- Hero -->
+        <!-- ============================= -->
 
-        <p>
-            كل قطعة تحكي قصة فريدة،
-            صُممت وأُحيكت بعناية فائقة.
-        </p>
+        <section
+            class="hero fade-element"
+            aria-labelledby="hero-title">
 
-    </section>
 
-    <!-- المنتجات -->
-    <section id="our-work"
-             class="gallery-section fade-element">
+            <div class="logo-container">
 
-        <div class="section-header">
+                <img
+                    src="ms.png"
+                    class="brand-logo"
+                    alt="شعار M.S Handmade"
+                    loading="eager">
 
-            <h2>
-                ✨ لمعة إبداعاتنا ✨
-            </h2>
+            </div>
 
-            <button id="show-add-form"
+
+            <div class="hero-badge">
+
+                مصنوع خصيصاً ليناسب ذوقك الرفيع
+
+            </div>
+
+
+            <h1 id="hero-title">
+
+                إبداعات يدوية
+                <br>
+                مصنوعة بكل إتقان
+
+            </h1>
+
+
+            <p>
+
+                كل قطعة تحكي قصة فريدة،
+                صُممت وأُحيكت بعناية فائقة.
+
+            </p>
+
+
+            <a
+                href="#our-work"
+                class="hero-button">
+
+                اكتشفي أعمالنا ✨
+
+            </a>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- About -->
+        <!-- ============================= -->
+
+        <section
+            id="about"
+            class="about-section fade-element"
+            aria-labelledby="about-title">
+
+
+            <div class="about-content">
+
+                <span class="section-label">
+                    ✨ قصتنا
+                </span>
+
+
+                <h2 id="about-title">
+
+                    من نحن؟
+
+                </h2>
+
+
+                <p>
+
+                    في M.S Handmade نؤمن أن أجمل الأشياء
+                    هي التي تُصنع بحب واهتمام بالتفاصيل.
+
+                </p>
+
+
+                <p>
+
+                    نقدم قطعاً يدوية مميزة تجمع بين
+                    البساطة، الذوق، والإبداع، مع اهتمام
+                    خاص بكل تفصيلة في التصميم.
+
+                </p>
+
+
+                <div class="about-features">
+
+                    <div class="feature-card">
+
+                        <span>🧵</span>
+
+                        <h3>
+                            صناعة يدوية
+                        </h3>
+
+                        <p>
+                            كل قطعة يتم تنفيذها بعناية.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <span>💗</span>
+
+                        <h3>
+                            مصنوعة بحب
+                        </h3>
+
+                        <p>
+                            نهتم بالتفاصيل الصغيرة.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <span>✨</span>
+
+                        <h3>
+                            تصميم مميز
+                        </h3>
+
+                        <p>
+                            أفكار تناسب ذوقك الخاص.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- Products -->
+        <!-- ============================= -->
+
+        <section
+            id="our-work"
+            class="gallery-section fade-element"
+            aria-labelledby="products-title">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ✨ منتجاتنا
+                    </span>
+
+                    <h2 id="products-title">
+
+                        لمعة إبداعاتنا
+
+                    </h2>
+
+                </div>
+
+
+                <!-- يظهر للأدمن فقط -->
+
+                <button
+                    id="show-add-form"
                     class="btn-secondary"
                     style="display:none;">
 
-                + إضافة منتج جديد
+                    + إضافة منتج جديد
 
-            </button>
+                </button>
 
-        </div>
+            </div>
 
-        <!-- نموذج إضافة المنتج -->
-        <div id="add-product-form"
-             class="admin-form"
-             style="display:none;">
 
-            <h3>إضافة منتج</h3>
+            <!-- ============================= -->
+            <!-- Admin Form -->
+            <!-- ============================= -->
 
-            <input
-                type="text"
-                id="product-title"
-                placeholder="اسم المنتج">
+            <div
+                id="add-product-form"
+                class="admin-form"
+                style="display:none;">
 
-            <input
-                type="text"
-                id="product-desc"
-                placeholder="وصف المنتج">
 
-            <input
-                type="file"
-                id="product-img"
-                accept="image/*">
+                <h3>
+                    إضافة منتج جديد
+                </h3>
 
-            <button id="save-product"
+
+                <label for="product-title">
+                    اسم المنتج
+                </label>
+
+                <input
+                    type="text"
+                    id="product-title"
+                    placeholder="مثال: شنطة لولي"
+                    autocomplete="off">
+
+
+                <label for="product-desc">
+                    وصف المنتج
+                </label>
+
+                <input
+                    type="text"
+                    id="product-desc"
+                    placeholder="اكتبي وصفاً مختصراً للمنتج"
+                    autocomplete="off">
+
+
+                <label for="product-img">
+                    صورة المنتج
+                </label>
+
+                <input
+                    type="file"
+                    id="product-img"
+                    accept="image/*">
+
+
+                <button
+                    id="save-product"
                     class="btn-primary">
 
-                نشر المنتج
+                    نشر المنتج
 
-            </button>
+                </button>
 
-        </div>
+            </div>
 
-        <!-- المنتجات -->
-        <div id="gallery-container"
-             class="gallery-grid">
 
-        </div>
+            <!-- ============================= -->
+            <!-- Products Container -->
+            <!-- ============================= -->
 
-    </section>
+            <div
+                id="gallery-container"
+                class="gallery-grid">
 
-    <!-- نافذة تكبير الصورة -->
-    <div id="imageModal">
+            </div>
 
-        <img id="modalContent">
+        </section>
+
+
+        <!-- ============================= -->
+        <!-- Contact -->
+        <!-- ============================= -->
+
+        <section
+            id="contact"
+            class="contact-section fade-element"
+            aria-labelledby="contact-title">
+
+
+            <span class="section-label">
+                💌 تواصلي معنا
+            </span>
+
+
+            <h2 id="contact-title">
+
+                هل أعجبتك إحدى قطعنا؟
+
+            </h2>
+
+
+            <p>
+
+                يمكنك التواصل معنا والاستفسار عن
+                المنتجات والتصميمات المتاحة.
+
+            </p>
+
+
+            <div class="contact-actions">
+
+                <p class="contact-note">
+
+                    🌸 ستجدين وسائل التواصل
+                    أسفل كل منتج.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ============================= -->
+    <!-- Image Modal -->
+    <!-- ============================= -->
+
+    <div
+        id="imageModal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="عرض صورة المنتج">
+
+
+        <img
+            id="modalContent"
+            alt="صورة المنتج">
+
 
         <div id="caption">
+
             اضغط في أي مكان للإغلاق
+
         </div>
 
     </div>
 
+
+    <!-- ============================= -->
+    <!-- Footer -->
+    <!-- ============================= -->
+
+    <footer class="footer">
+
+
+        <div class="footer-content">
+
+
+            <div class="footer-brand">
+
+                <h3>
+                    M.S Handmade
+                </h3>
+
+                <p>
+
+                    إبداعات يدوية
+                    مصنوعة بكل حب وإتقان. 💗
+
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    روابط سريعة
+                </h4>
+
+                <a href="#home">
+                    الرئيسية
+                </a>
+
+                <a href="#our-work">
+                    أعمالنا
+                </a>
+
+                <a href="#about">
+                    من نحن
+                </a>
+
+                <a href="#contact">
+                    تواصل معنا
+                </a>
+
+            </div>
+
+
+            <div class="footer-info">
+
+                <h4>
+                    M.S Handmade
+                </h4>
+
+                <p>
+                    Handmade with love ✨
+                </p>
+
+                <p>
+                    جميع الحقوق محفوظة
+                    © <span id="year"></span>
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                Made with ❤️ by Habiba
+            </p>
+
+        </div>
+
+
+    </footer>
+
+
+    <!-- Main JavaScript -->
     <script src="script.js"></script>
 
+
+    <!-- Dynamic Year -->
+
+    <script>
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+    </script>
+
+
 </body>
+
 </html>
