@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -21,26 +22,36 @@
 
     <title>M.S Handmade | إبداعات يدوية</title>
 
+
     <!-- Google Font -->
+
     <link
         href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap"
         rel="stylesheet">
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="style.css">
+
+    <!-- CSS -->
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
 
     <!-- Supabase -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
     </script>
+
 </head>
 
 
 <body>
 
-    <!-- ============================= -->
-    <!-- شاشة الترحيب -->
-    <!-- ============================= -->
+
+    <!-- ========================================
+         INTRO SCREEN
+    ======================================== -->
 
     <div id="intro-screen">
 
@@ -59,49 +70,97 @@
     </div>
 
 
-    <!-- ============================= -->
-    <!-- Header -->
-    <!-- ============================= -->
+
+    <!-- ========================================
+         HEADER
+    ======================================== -->
 
     <header class="fade-element">
+
+
+        <!-- Logo -->
 
         <div class="logo">
 
             M.S
-            <span>Handmade</span>
+
+            <span>
+                Handmade
+            </span>
 
         </div>
 
 
-        <nav aria-label="القائمة الرئيسية">
 
-           <a href="#home">
-    الرئيسية
-</a>
+        <!-- Mobile Menu Button -->
 
-            <a href="#our-work">
+        <button
+            id="menu-toggle"
+            class="menu-toggle"
+            aria-label="فتح القائمة"
+            aria-expanded="false">
+
+            ☰
+
+        </button>
+
+
+
+        <!-- Navigation -->
+
+        <nav
+            id="main-nav"
+            aria-label="القائمة الرئيسية">
+
+
+            <a
+                href="#home"
+                class="active">
+
+                الرئيسية
+
+            </a>
+
+
+            <a
+                href="#our-work">
+
                 أعمالنا
+
             </a>
 
-            <a href="#about">
+
+            <a
+                href="#about">
+
                 من نحن
+
             </a>
 
-            <a href="#contact">
+
+            <a
+                href="#contact">
+
                 تواصل معنا
+
             </a>
+
 
         </nav>
+
 
     </header>
 
 
-    <!-- ============================= -->
-    <!-- Admin -->
-    <!-- ============================= -->
 
-    <div id="admin-bar"
-         class="admin-bar">
+    <!-- ========================================
+         ADMIN BAR
+    ======================================== -->
+
+    <div
+        id="admin-bar"
+        class="admin-bar">
+
 
         <button
             id="login-btn"
@@ -110,6 +169,7 @@
             تسجيل دخول الأدمن
 
         </button>
+
 
 
         <button
@@ -121,15 +181,22 @@
 
         </button>
 
+
     </div>
 
+
+
+    <!-- ========================================
+         MAIN
+    ======================================== -->
 
     <main id="home">
 
 
-        <!-- ============================= -->
-        <!-- Hero -->
-        <!-- ============================= -->
+
+        <!-- ========================================
+             HERO
+        ======================================== -->
 
         <section
             class="hero fade-element"
@@ -147,6 +214,7 @@
             </div>
 
 
+
             <div class="hero-badge">
 
                 مصنوع خصيصاً ليناسب ذوقك الرفيع
@@ -154,13 +222,17 @@
             </div>
 
 
+
             <h1 id="hero-title">
 
                 إبداعات يدوية
+
                 <br>
+
                 مصنوعة بكل إتقان
 
             </h1>
+
 
 
             <p>
@@ -171,6 +243,7 @@
             </p>
 
 
+
             <a
                 href="#our-work"
                 class="hero-button">
@@ -179,12 +252,14 @@
 
             </a>
 
+
         </section>
 
 
-        <!-- ============================= -->
-        <!-- About -->
-        <!-- ============================= -->
+
+        <!-- ========================================
+             ABOUT
+        ======================================== -->
 
         <section
             id="about"
@@ -194,9 +269,13 @@
 
             <div class="about-content">
 
+
                 <span class="section-label">
+
                     ✨ قصتنا
+
                 </span>
+
 
 
                 <h2 id="about-title">
@@ -206,12 +285,14 @@
                 </h2>
 
 
+
                 <p>
 
                     في M.S Handmade نؤمن أن أجمل الأشياء
-                    هي التي تُصنع باتقام واهتمام بالتفاصيل.
+                    هي التي تُصنع بإتقان واهتمام بالتفاصيل.
 
                 </p>
+
 
 
                 <p>
@@ -223,11 +304,17 @@
                 </p>
 
 
+
+                <!-- Features -->
+
                 <div class="about-features">
+
 
                     <div class="feature-card">
 
-                        <span>🧵</span>
+                        <span>
+                            🧵
+                        </span>
 
                         <h3>
                             صناعة يدوية
@@ -240,12 +327,15 @@
                     </div>
 
 
+
                     <div class="feature-card">
 
-                        <span>💗</span>
+                        <span>
+                            💗
+                        </span>
 
                         <h3>
-                     مصنوعة بكل اتقان
+                            مصنوعة بكل إتقان
                         </h3>
 
                         <p>
@@ -255,9 +345,12 @@
                     </div>
 
 
+
                     <div class="feature-card">
 
-                        <span>✨</span>
+                        <span>
+                            ✨
+                        </span>
 
                         <h3>
                             تصميم مميز
@@ -269,16 +362,20 @@
 
                     </div>
 
+
                 </div>
 
+
             </div>
+
 
         </section>
 
 
-        <!-- ============================= -->
-        <!-- Products -->
-        <!-- ============================= -->
+
+        <!-- ========================================
+             PRODUCTS
+        ======================================== -->
 
         <section
             id="our-work"
@@ -286,13 +383,20 @@
             aria-labelledby="products-title">
 
 
+
+            <!-- Section Header -->
+
             <div class="section-header">
+
 
                 <div>
 
                     <span class="section-label">
+
                         ✨ منتجاتنا
+
                     </span>
+
 
                     <h2 id="products-title">
 
@@ -303,7 +407,8 @@
                 </div>
 
 
-                <!-- يظهر للأدمن فقط -->
+
+                <!-- Admin Add Button -->
 
                 <button
                     id="show-add-form"
@@ -314,12 +419,94 @@
 
                 </button>
 
+
             </div>
 
 
-            <!-- ============================= -->
-            <!-- Admin Form -->
-            <!-- ============================= -->
+
+
+    </div>
+
+</div>
+            <!-- ========================================
+                 SEARCH & FILTER
+            ======================================== -->
+
+            <div class="product-tools">
+
+
+                <!-- Search -->
+
+                <div class="search-box">
+
+
+                    <input
+                        type="search"
+                        id="product-search"
+                        placeholder="🔍 ابحثي عن منتج..."
+                        aria-label="البحث عن منتج">
+
+
+                    <button
+                        id="clear-search"
+                        type="button"
+                        aria-label="مسح البحث">
+
+                        ✕
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- Filters -->
+
+                <div class="product-filters">
+
+
+                    <button
+                        class="filter-btn active"
+                        data-filter="all"
+                        type="button">
+
+                        الكل
+
+                    </button>
+
+
+
+                    <button
+                        class="filter-btn"
+                        data-filter="شنط"
+                        type="button">
+
+                        👜 شنط
+
+                    </button>
+
+
+                    <button
+                        class="filter-btn"
+                        data-filter="تطريز"
+                        type="button">
+
+                        🧵 تطريز
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ========================================
+                 ADMIN FORM
+            ======================================== -->
 
             <div
                 id="add-product-form"
@@ -328,13 +515,19 @@
 
 
                 <h3>
+
                     إضافة منتج جديد
+
                 </h3>
 
 
+
                 <label for="product-title">
+
                     اسم المنتج
+
                 </label>
+
 
                 <input
                     type="text"
@@ -343,9 +536,13 @@
                     autocomplete="off">
 
 
+
                 <label for="product-desc">
+
                     وصف المنتج
+
                 </label>
+
 
                 <input
                     type="text"
@@ -354,14 +551,19 @@
                     autocomplete="off">
 
 
+
                 <label for="product-img">
+
                     صورة المنتج
+
                 </label>
+
 
                 <input
                     type="file"
                     id="product-img"
                     accept="image/*">
+
 
 
                 <button
@@ -372,12 +574,14 @@
 
                 </button>
 
+
             </div>
 
 
-            <!-- ============================= -->
-            <!-- Products Container -->
-            <!-- ============================= -->
+
+            <!-- ========================================
+                 PRODUCTS GALLERY
+            ======================================== -->
 
             <div
                 id="gallery-container"
@@ -385,12 +589,14 @@
 
             </div>
 
+
         </section>
 
 
-        <!-- ============================= -->
-        <!-- Contact -->
-        <!-- ============================= -->
+
+        <!-- ========================================
+             CONTACT
+        ======================================== -->
 
         <section
             id="contact"
@@ -399,8 +605,11 @@
 
 
             <span class="section-label">
+
                 💌 تواصلي معنا
+
             </span>
+
 
 
             <h2 id="contact-title">
@@ -408,6 +617,7 @@
                 هل أعجبتك إحدى قطعنا؟
 
             </h2>
+
 
 
             <p>
@@ -418,7 +628,9 @@
             </p>
 
 
+
             <div class="contact-actions">
+
 
                 <p class="contact-note">
 
@@ -427,7 +639,9 @@
 
                 </p>
 
+
             </div>
+
 
         </section>
 
@@ -435,9 +649,10 @@
     </main>
 
 
-    <!-- ============================= -->
-    <!-- Image Modal -->
-    <!-- ============================= -->
+
+    <!-- ========================================
+         IMAGE MODAL
+    ======================================== -->
 
     <div
         id="imageModal"
@@ -457,12 +672,14 @@
 
         </div>
 
+
     </div>
 
 
-    <!-- ============================= -->
-    <!-- Footer -->
-    <!-- ============================= -->
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
 
     <footer class="footer">
 
@@ -470,11 +687,17 @@
         <div class="footer-content">
 
 
+            <!-- Brand -->
+
             <div class="footer-brand">
 
+
                 <h3>
+
                     M.S Handmade
+
                 </h3>
+
 
                 <p>
 
@@ -483,48 +706,81 @@
 
                 </p>
 
+
             </div>
 
+
+
+            <!-- Links -->
 
             <div class="footer-links">
 
+
                 <h4>
+
                     روابط سريعة
+
                 </h4>
 
+
                 <a href="#home">
+
                     الرئيسية
+
                 </a>
+
 
                 <a href="#our-work">
+
                     أعمالنا
+
                 </a>
+
 
                 <a href="#about">
+
                     من نحن
+
                 </a>
 
+
                 <a href="#contact">
+
                     تواصل معنا
+
                 </a>
+
 
             </div>
 
 
+
+            <!-- Info -->
+
             <div class="footer-info">
 
+
                 <h4>
+
                     M.S Handmade
+
                 </h4>
 
-                <p>
-                    Handmade with love ✨
-                </p>
 
                 <p>
+
+                    Handmade with love ✨
+
+                </p>
+
+
+                <p>
+
                     جميع الحقوق محفوظة
                     © <span id="year"></span>
+
                 </p>
+
 
             </div>
 
@@ -532,11 +788,16 @@
         </div>
 
 
+
         <div class="footer-bottom">
 
+
             <p>
+
                 Made with ❤️ by Habiba
+
             </p>
+
 
         </div>
 
@@ -544,8 +805,13 @@
     </footer>
 
 
-    <!-- Main JavaScript -->
+
+    <!-- ========================================
+         JAVASCRIPT
+    ======================================== -->
+
     <script src="script.js"></script>
+
 
 
     <!-- Dynamic Year -->
