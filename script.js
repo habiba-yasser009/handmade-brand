@@ -1,3 +1,7 @@
+// ========================================
+// Supabase
+// ========================================
+
 const SUPABASE_URL = "https://xqsdrgtlkwpzzstoches.supabase.co";
 const SUPABASE_KEY = "sb_publishable_a-DKrUN4Dj8Xq14m3sNvfQ_RWp1YaII";
 
@@ -52,7 +56,9 @@ function startIntroAnimation() {
         fadeElements.forEach((element, index) => {
 
             setTimeout(() => {
+
                 element.classList.add("show");
+
             }, index * 150);
 
         });
@@ -171,7 +177,9 @@ if (loginBtn) {
         showAdminControls();
 
         await renderProducts();
+
     });
+
 }
 
 
@@ -205,7 +213,9 @@ if (logoutBtn) {
 
 
         await renderProducts();
+
     });
+
 }
 
 
@@ -235,9 +245,11 @@ if (addFormBtn && addForm) {
 
             addFormBtn.textContent =
                 "+ إضافة منتج جديد";
+
         }
 
     });
+
 }
 
 
@@ -311,6 +323,7 @@ async function renderProducts() {
         );
 
     });
+
 }
 
 
@@ -322,6 +335,7 @@ function createProductCard(product, isAdmin) {
 
     const card =
         document.createElement("article");
+
 
     card.className =
         "gallery-item fade-element show";
@@ -342,7 +356,23 @@ function createProductCard(product, isAdmin) {
         product.description || "";
 
 
+    // ========================================
+    // WhatsApp Message
+    // ========================================
+
+    const whatsappMessage =
+        `مرحبًا، أريد الاستفسار عن المنتج: ${productName}`;
+
+
+    const whatsappUrl =
+        `https://wa.me/201556051932?text=${encodeURIComponent(
+            whatsappMessage
+        )}`;
+
+
+    // ========================================
     // Product HTML
+    // ========================================
 
     card.innerHTML = `
 
@@ -377,15 +407,19 @@ function createProductCard(product, isAdmin) {
                 </p>
 
 
+                <!-- WhatsApp -->
+
                 <a
-                    href="https://wa.me/201556051932"
+                    href="${whatsappUrl}"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="whatsapp-btn"
                 >
-                    تواصل عبر واتساب
+                    💬 اطلب عبر واتساب
                 </a>
 
+
+                <!-- Facebook -->
 
                 <a
                     href="https://www.facebook.com/share/g/19DZh5pJpd/"
@@ -458,6 +492,7 @@ function createProductCard(product, isAdmin) {
 
 
                 await renderProducts();
+
             }
         );
 
@@ -465,6 +500,7 @@ function createProductCard(product, isAdmin) {
         card
             .querySelector(".item-content")
             .appendChild(deleteButton);
+
     }
 
 
@@ -489,10 +525,12 @@ function createProductCard(product, isAdmin) {
 
             }
         );
+
     }
 
 
     galleryContainer.appendChild(card);
+
 }
 
 
@@ -509,18 +547,22 @@ function openImageModal(imageUrl, productName) {
 
     modalContent.src = imageUrl;
 
-    modalContent.alt = productName || "صورة المنتج";
+    modalContent.alt =
+        productName || "صورة المنتج";
 
 
     if (caption) {
+
         caption.textContent =
             productName || "صورة المنتج";
+
     }
 
 
     imageModal.style.display = "block";
 
     document.body.style.overflow = "hidden";
+
 }
 
 
@@ -528,11 +570,17 @@ function closeImageModal() {
 
     if (!imageModal) return;
 
+
     imageModal.style.display = "none";
 
     document.body.style.overflow = "";
+
 }
 
+
+// ========================================
+// Close Modal By Clicking Background
+// ========================================
 
 if (imageModal) {
 
@@ -540,22 +588,23 @@ if (imageModal) {
         "click",
         (event) => {
 
-            // الإغلاق عند الضغط على الخلفية
-            // وليس على الصورة نفسها
-
             if (
                 event.target === imageModal
             ) {
 
                 closeImageModal();
+
             }
 
         }
     );
+
 }
 
 
-// Escape لإغلاق الصورة
+// ========================================
+// Escape To Close Image
+// ========================================
 
 document.addEventListener(
     "keydown",
@@ -568,6 +617,7 @@ document.addEventListener(
         ) {
 
             closeImageModal();
+
         }
 
     }
@@ -584,7 +634,9 @@ if (saveProductBtn) {
         "click",
         async () => {
 
-            // Check login
+            // ========================================
+            // Check Login
+            // ========================================
 
             const { data: userData } =
                 await supabaseClient.auth.getUser();
@@ -598,7 +650,13 @@ if (saveProductBtn) {
 
                 return;
             }
-             const titleInput =
+
+
+            // ========================================
+            // Get Inputs
+            // ========================================
+
+            const titleInput =
                 document.getElementById(
                     "product-title"
                 );
@@ -628,7 +686,9 @@ if (saveProductBtn) {
                 imgInput.files[0];
 
 
+            // ========================================
             // Validate
+            // ========================================
 
             if (!title || !description) {
 
@@ -695,7 +755,7 @@ if (saveProductBtn) {
             try {
 
                 // ========================================
-                // File Name
+                // File Extension
                 // ========================================
 
                 const fileExtension =
@@ -704,6 +764,10 @@ if (saveProductBtn) {
                         .pop()
                         .toLowerCase();
 
+
+                // ========================================
+                // Unique File Name
+                // ========================================
 
                 const fileName =
                     Date.now() +
@@ -739,11 +803,12 @@ if (saveProductBtn) {
                 if (uploadError) {
 
                     throw uploadError;
+
                 }
 
 
                 // ========================================
-                // Public Image URL
+                // Get Public Image URL
                 // ========================================
 
                 const { data: publicUrlData } =
@@ -780,6 +845,7 @@ if (saveProductBtn) {
                 if (insertError) {
 
                     throw insertError;
+
                 }
 
 
@@ -793,18 +859,21 @@ if (saveProductBtn) {
 
 
                 titleInput.value = "";
+
                 descInput.value = "";
+
                 imgInput.value = "";
 
 
                 addForm.style.display =
                     "none";
+
+
                 addFormBtn.textContent =
                     "+ إضافة منتج جديد";
 
 
                 await renderProducts();
-
 
             } catch (error) {
 
@@ -816,7 +885,6 @@ if (saveProductBtn) {
                     error.message
                 );
 
-
             } finally {
 
                 saveProductBtn.disabled =
@@ -824,10 +892,12 @@ if (saveProductBtn) {
 
                 saveProductBtn.textContent =
                     "نشر المنتج";
+
             }
 
         }
     );
+
 }
 
 
@@ -856,7 +926,8 @@ function setupActiveNavigation() {
 
     function updateActiveLink() {
 
-        let currentSection = "home";
+        let currentSection =
+            "home";
 
 
         const scrollPosition =
@@ -881,6 +952,7 @@ function setupActiveNavigation() {
 
                 currentSection =
                     section.id;
+
             }
 
         });
@@ -901,22 +973,25 @@ function setupActiveNavigation() {
                 link.classList.add(
                     "active"
                 );
+
             }
 
         });
+
     }
 
 
     window.addEventListener(
         "scroll",
         updateActiveLink,
-        { passive: true }
+        {
+            passive: true
+        }
     );
 
 
-    // تشغيل أول مرة
-
     updateActiveLink();
+
 }
 
 
@@ -957,6 +1032,7 @@ function setupNavigation() {
         );
 
     });
+
 }
 
 
@@ -982,4 +1058,3 @@ document.addEventListener(
 
     }
 );
-
