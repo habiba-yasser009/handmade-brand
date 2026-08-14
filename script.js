@@ -3,26 +3,38 @@
 // ========================================
 
 const SUPABASE_URL = "https://xqsdrgtlkwpzzstoches.supabase.co";
-const SUPABASE_KEY = "sb_publishable_a-DKrUN4Dj8Xq14m3sNvfQ_RWp1YaII";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const SUPABASE_KEY =
+    "sb_publishable_a-DKrUN4Dj8Xq14m3sNvfQ_RWp1YaII";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 // ========================================
 // DOM Elements
 // ========================================
 
-const introScreen = document.getElementById("intro-screen");
-const fadeElements = document.querySelectorAll(".fade-element");
+const introScreen =
+    document.getElementById("intro-screen");
 
-const loginBtn = document.getElementById("login-btn");
-const logoutBtn = document.getElementById("logout-btn");
+const fadeElements =
+    document.querySelectorAll(".fade-element");
 
-const addFormBtn = document.getElementById("show-add-form");
-const addForm = document.getElementById("add-product-form");
+const loginBtn =
+    document.getElementById("login-btn");
+
+const logoutBtn =
+    document.getElementById("logout-btn");
+
+const addFormBtn =
+    document.getElementById("show-add-form");
+
+const addForm =
+    document.getElementById("add-product-form");
 
 const galleryContainer =
     document.getElementById("gallery-container");
@@ -41,6 +53,42 @@ const caption =
 
 
 // ========================================
+// Search Elements
+// ========================================
+
+const searchInput =
+    document.getElementById("product-search");
+
+const clearSearchBtn =
+    document.getElementById("clear-search");
+
+const filterButtons =
+    document.querySelectorAll(".filter-btn");
+
+
+// ========================================
+// Mobile Menu
+// ========================================
+
+const menuToggle =
+    document.getElementById("menu-toggle");
+
+const mainNav =
+    document.getElementById("main-nav");
+
+
+// ========================================
+// Products State
+// ========================================
+
+let allProducts = [];
+
+let currentFilter = "all";
+
+let currentSearch = "";
+
+
+// ========================================
 // Intro Animation
 // ========================================
 
@@ -51,17 +99,22 @@ function startIntroAnimation() {
     setTimeout(() => {
 
         introScreen.style.opacity = "0";
-        introScreen.style.visibility = "hidden";
 
-        fadeElements.forEach((element, index) => {
+        introScreen.style.visibility =
+            "hidden";
 
-            setTimeout(() => {
 
-                element.classList.add("show");
+        fadeElements.forEach(
+            (element, index) => {
 
-            }, index * 150);
+                setTimeout(() => {
 
-        });
+                    element.classList.add("show");
+
+                }, index * 150);
+
+            }
+        );
 
     }, 1800);
 }
@@ -74,19 +127,30 @@ function startIntroAnimation() {
 function hideAdminControls() {
 
     if (addFormBtn) {
-        addFormBtn.style.display = "none";
+
+        addFormBtn.style.display =
+            "none";
     }
+
 
     if (addForm) {
-        addForm.style.display = "none";
+
+        addForm.style.display =
+            "none";
     }
+
 
     if (logoutBtn) {
-        logoutBtn.style.display = "none";
+
+        logoutBtn.style.display =
+            "none";
     }
 
+
     if (loginBtn) {
-        loginBtn.style.display = "inline-block";
+
+        loginBtn.style.display =
+            "inline-block";
     }
 }
 
@@ -94,15 +158,23 @@ function hideAdminControls() {
 function showAdminControls() {
 
     if (addFormBtn) {
-        addFormBtn.style.display = "inline-block";
+
+        addFormBtn.style.display =
+            "inline-block";
     }
+
 
     if (logoutBtn) {
-        logoutBtn.style.display = "inline-block";
+
+        logoutBtn.style.display =
+            "inline-block";
     }
 
+
     if (loginBtn) {
-        loginBtn.style.display = "none";
+
+        loginBtn.style.display =
+            "none";
     }
 }
 
@@ -113,19 +185,32 @@ function showAdminControls() {
 
 async function checkUser() {
 
-    const { data, error } =
-        await supabaseClient.auth.getUser();
+    try {
 
-    if (error || !data.user) {
+        const { data, error } =
+            await supabaseClient.auth.getUser();
+
+
+        if (error || !data.user) {
+
+            hideAdminControls();
+
+            return false;
+        }
+
+
+        showAdminControls();
+
+        return true;
+
+    } catch (error) {
+
+        console.error(error);
 
         hideAdminControls();
 
         return false;
     }
-
-    showAdminControls();
-
-    return true;
 }
 
 
@@ -135,50 +220,72 @@ async function checkUser() {
 
 if (loginBtn) {
 
-    loginBtn.addEventListener("click", async () => {
+    loginBtn.addEventListener(
+        "click",
+        async () => {
 
-        const email =
-            prompt("اكتبي البريد الإلكتروني للأدمن:");
-
-        if (!email) return;
-
-
-        const password =
-            prompt("اكتبي كلمة المرور:");
-
-        if (!password) return;
+            const email =
+                prompt(
+                    "اكتبي البريد الإلكتروني للأدمن:"
+                );
 
 
-        const { error } =
-            await supabaseClient.auth.signInWithPassword({
-
-                email: email,
-                password: password
-
-            });
+            if (!email) return;
 
 
-        if (error) {
+            const password =
+                prompt(
+                    "اكتبي كلمة المرور:"
+                );
 
-            alert(
-                "فشل تسجيل الدخول:\n" +
-                error.message
-            );
 
-            return;
+            if (!password) return;
+
+
+            try {
+
+                const { error } =
+                    await supabaseClient.auth
+                        .signInWithPassword({
+
+                            email: email,
+
+                            password: password
+
+                        });
+
+
+                if (error) {
+
+                    alert(
+                        "فشل تسجيل الدخول:\n" +
+                        error.message
+                    );
+
+                    return;
+                }
+
+
+                alert(
+                    "تم تسجيل الدخول بنجاح 🔐✨"
+                );
+
+
+                showAdminControls();
+
+                await renderProducts();
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "حدث خطأ أثناء تسجيل الدخول"
+                );
+            }
+
         }
-
-
-        alert(
-            "تم تسجيل الدخول بنجاح 🔐✨"
-        );
-
-
-        showAdminControls();
-
-        await renderProducts();
-
-    });
+    );
 
 }
 
@@ -189,72 +296,93 @@ if (loginBtn) {
 
 if (logoutBtn) {
 
-    logoutBtn.addEventListener("click", async () => {
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
 
-        const { error } =
-            await supabaseClient.auth.signOut();
+            try {
+
+                const { error } =
+                    await supabaseClient.auth
+                        .signOut();
 
 
-        if (error) {
+                if (error) {
 
-            alert(
-                "حدث خطأ أثناء تسجيل الخروج"
-            );
+                    alert(
+                        "حدث خطأ أثناء تسجيل الخروج"
+                    );
 
-            return;
+                    return;
+                }
+
+
+                hideAdminControls();
+
+                alert(
+                    "تم تسجيل الخروج 👋"
+                );
+
+
+                await renderProducts();
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
         }
-
-
-        hideAdminControls();
-
-        alert(
-            "تم تسجيل الخروج 👋"
-        );
-
-
-        await renderProducts();
-
-    });
+    );
 
 }
 
 
 // ========================================
-// Add Product Form
+// Add Product Form Toggle
 // ========================================
 
 if (addFormBtn && addForm) {
 
-    addFormBtn.addEventListener("click", () => {
+    addFormBtn.addEventListener(
+        "click",
+        () => {
 
-        const isHidden =
-            addForm.style.display === "none" ||
-            addForm.style.display === "";
+            const isHidden =
+                addForm.style.display === "none" ||
+                addForm.style.display === "";
 
 
-        if (isHidden) {
+            if (isHidden) {
 
-            addForm.style.display = "block";
+                addForm.style.display =
+                    "block";
 
-            addFormBtn.textContent =
-                "إغلاق النموذج";
+                addFormBtn.textContent =
+                    "إغلاق النموذج";
 
-        } else {
+                addForm.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
 
-            addForm.style.display = "none";
+            } else {
 
-            addFormBtn.textContent =
-                "+ إضافة منتج جديد";
+                addForm.style.display =
+                    "none";
+
+                addFormBtn.textContent =
+                    "+ إضافة منتج جديد";
+            }
 
         }
-
-    });
+    );
 
 }
 
 
 // ========================================
-// Render Products
+// Get Products From Supabase
 // ========================================
 
 async function renderProducts() {
@@ -269,50 +397,98 @@ async function renderProducts() {
     `;
 
 
-    const { data: products, error } =
-        await supabaseClient
-            .from("products")
-            .select("*")
-            .order("created_at", {
-                ascending: false
-            });
+    try {
+
+        const {
+            data: products,
+            error
+        } =
+            await supabaseClient
+                .from("products")
+                .select("*")
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
 
 
-    if (error) {
+        if (error) {
+
+            console.error(error);
+
+            galleryContainer.innerHTML = `
+                <p class="products-message error-message">
+                    حدث خطأ أثناء تحميل المنتجات
+                </p>
+            `;
+
+            return;
+        }
+
+
+        allProducts =
+            products || [];
+
+
+        const {
+            data: userData
+        } =
+            await supabaseClient.auth.getUser();
+
+
+        const isAdmin =
+            !!userData.user;
+
+
+        displayProducts(
+            allProducts,
+            isAdmin
+        );
+
+
+    } catch (error) {
 
         console.error(error);
 
         galleryContainer.innerHTML = `
             <p class="products-message error-message">
-                حدث خطأ أثناء تحميل المنتجات
+                حدث خطأ أثناء الاتصال بقاعدة البيانات
             </p>
         `;
-
-        return;
     }
+}
+
+
+// ========================================
+// Display Products
+// ========================================
+
+function displayProducts(
+    products,
+    isAdmin
+) {
+
+    if (!galleryContainer) return;
 
 
     galleryContainer.innerHTML = "";
 
 
-    if (!products || products.length === 0) {
+    if (
+        !products ||
+        products.length === 0
+    ) {
 
         galleryContainer.innerHTML = `
             <p class="products-message">
-                لا توجد منتجات حتى الآن 🌸
+                لا توجد منتجات مطابقة للبحث 🔍
             </p>
         `;
 
         return;
     }
-
-
-    const { data: userData } =
-        await supabaseClient.auth.getUser();
-
-
-    const isAdmin =
-        !!userData.user;
 
 
     products.forEach(product => {
@@ -323,15 +499,191 @@ async function renderProducts() {
         );
 
     });
+}
+
+
+// ========================================
+// Search + Filter
+// ========================================
+
+function filterProducts() {
+
+    const searchText =
+        currentSearch
+            .trim()
+            .toLowerCase();
+
+
+    const filteredProducts =
+        allProducts.filter(
+            product => {
+
+                const name =
+                    String(
+                        product.name || ""
+                    ).toLowerCase();
+
+
+                const description =
+                    String(
+                        product.description || ""
+                    ).toLowerCase();
+
+
+                // البحث
+
+                const matchesSearch =
+                    searchText === "" ||
+                    name.includes(searchText) ||
+                    description.includes(searchText);
+
+
+                // الفلتر
+
+                let matchesFilter = true;
+
+
+                if (
+                    currentFilter !== "all"
+                ) {
+
+                    const filterText =
+                        currentFilter.toLowerCase();
+
+
+                    matchesFilter =
+                        name.includes(filterText) ||
+                        description.includes(filterText);
+                }
+
+
+                return (
+                    matchesSearch &&
+                    matchesFilter
+                );
+
+            }
+        );
+
+
+    checkUser().then(isAdmin => {
+
+        displayProducts(
+            filteredProducts,
+            isAdmin
+        );
+
+    });
 
 }
+
+
+// ========================================
+// Search Input
+// ========================================
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            currentSearch =
+                searchInput.value;
+
+
+            filterProducts();
+
+        }
+    );
+
+}
+
+
+// ========================================
+// Clear Search
+// ========================================
+
+if (clearSearchBtn) {
+
+    clearSearchBtn.addEventListener(
+        "click",
+        () => {
+
+            if (searchInput) {
+
+                searchInput.value = "";
+
+            }
+
+
+            currentSearch = "";
+
+
+            filterProducts();
+
+
+            if (searchInput) {
+
+                searchInput.focus();
+
+            }
+
+        }
+    );
+
+}
+
+
+// ========================================
+// Filter Buttons
+// ========================================
+
+filterButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                filterButtons.forEach(
+                    btn => {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                currentFilter =
+                    button.dataset.filter ||
+                    "all";
+
+
+                filterProducts();
+
+            }
+        );
+
+    }
+);
 
 
 // ========================================
 // Create Product Card
 // ========================================
 
-function createProductCard(product, isAdmin) {
+function createProductCard(
+    product,
+    isAdmin
+) {
 
     const card =
         document.createElement("article");
@@ -357,7 +709,7 @@ function createProductCard(product, isAdmin) {
 
 
     // ========================================
-    // WhatsApp Message
+    // WhatsApp
     // ========================================
 
     const whatsappMessage =
@@ -371,7 +723,7 @@ function createProductCard(product, isAdmin) {
 
 
     // ========================================
-    // Product HTML
+    // Product Card HTML
     // ========================================
 
     card.innerHTML = `
@@ -379,8 +731,8 @@ function createProductCard(product, isAdmin) {
         <div class="item-img-wrapper">
 
             <img
-                src="${imageUrl}"
-                alt="${productName}"
+                src="${escapeHTML(imageUrl)}"
+                alt="${escapeHTML(productName)}"
                 class="clickable-img"
                 loading="lazy"
             >
@@ -391,12 +743,12 @@ function createProductCard(product, isAdmin) {
         <div class="item-content">
 
             <h3>
-                ${productName}
+                ${escapeHTML(productName)}
             </h3>
 
 
             <p>
-                ${productDescription}
+                ${escapeHTML(productDescription)}
             </p>
 
 
@@ -407,8 +759,6 @@ function createProductCard(product, isAdmin) {
                 </p>
 
 
-                <!-- WhatsApp -->
-
                 <a
                     href="${whatsappUrl}"
                     target="_blank"
@@ -418,8 +768,6 @@ function createProductCard(product, isAdmin) {
                     💬 اطلب عبر واتساب
                 </a>
 
-
-                <!-- Facebook -->
 
                 <a
                     href="https://www.facebook.com/share/g/19DZh5pJpd/"
@@ -438,7 +786,7 @@ function createProductCard(product, isAdmin) {
 
 
     // ========================================
-    // Delete Button - Admin Only
+    // Delete - Admin Only
     // ========================================
 
     if (isAdmin) {
@@ -468,48 +816,70 @@ function createProductCard(product, isAdmin) {
                 if (!confirmDelete) return;
 
 
-                const { error } =
-                    await supabaseClient
-                        .from("products")
-                        .delete()
-                        .eq("id", product.id);
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient
+                            .from("products")
+                            .delete()
+                            .eq(
+                                "id",
+                                product.id
+                            );
 
 
-                if (error) {
+                    if (error) {
+
+                        alert(
+                            "فشل حذف المنتج:\n" +
+                            error.message
+                        );
+
+                        return;
+                    }
+
 
                     alert(
-                        "فشل حذف المنتج:\n" +
-                        error.message
+                        "تم حذف المنتج بنجاح 🗑️"
                     );
 
-                    return;
+
+                    await renderProducts();
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    alert(
+                        "حدث خطأ أثناء حذف المنتج"
+                    );
                 }
-
-
-                alert(
-                    "تم حذف المنتج بنجاح 🗑️"
-                );
-
-
-                await renderProducts();
 
             }
         );
 
 
         card
-            .querySelector(".item-content")
-            .appendChild(deleteButton);
+            .querySelector(
+                ".item-content"
+            )
+            .appendChild(
+                deleteButton
+            );
 
     }
 
 
     // ========================================
-    // Open Image Modal
+    // Image Modal
     // ========================================
 
     const image =
-        card.querySelector(".clickable-img");
+        card.querySelector(
+            ".clickable-img"
+        );
 
 
     if (image) {
@@ -529,8 +899,28 @@ function createProductCard(product, isAdmin) {
     }
 
 
-    galleryContainer.appendChild(card);
+    galleryContainer.appendChild(
+        card
+    );
 
+}
+
+
+// ========================================
+// Escape HTML
+// ========================================
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        value;
+
+
+    return div.innerHTML;
 }
 
 
@@ -538,30 +928,44 @@ function createProductCard(product, isAdmin) {
 // Image Modal
 // ========================================
 
-function openImageModal(imageUrl, productName) {
+function openImageModal(
+    imageUrl,
+    productName
+) {
 
-    if (!imageModal || !modalContent) {
+    if (
+        !imageModal ||
+        !modalContent
+    ) {
+
         return;
     }
 
 
-    modalContent.src = imageUrl;
+    modalContent.src =
+        imageUrl;
+
 
     modalContent.alt =
-        productName || "صورة المنتج";
+        productName ||
+        "صورة المنتج";
 
 
     if (caption) {
 
         caption.textContent =
-            productName || "صورة المنتج";
+            productName ||
+            "صورة المنتج";
 
     }
 
 
-    imageModal.style.display = "block";
+    imageModal.style.display =
+        "flex";
 
-    document.body.style.overflow = "hidden";
+
+    document.body.style.overflow =
+        "hidden";
 
 }
 
@@ -571,25 +975,36 @@ function closeImageModal() {
     if (!imageModal) return;
 
 
-    imageModal.style.display = "none";
+    imageModal.style.display =
+        "none";
 
-    document.body.style.overflow = "";
+
+    if (modalContent) {
+
+        modalContent.src = "";
+
+    }
+
+
+    document.body.style.overflow =
+        "";
 
 }
 
 
 // ========================================
-// Close Modal By Clicking Background
+// Close Modal
 // ========================================
 
 if (imageModal) {
 
     imageModal.addEventListener(
         "click",
-        (event) => {
+        event => {
 
             if (
-                event.target === imageModal
+                event.target ===
+                imageModal
             ) {
 
                 closeImageModal();
@@ -603,17 +1018,18 @@ if (imageModal) {
 
 
 // ========================================
-// Escape To Close Image
+// Escape Key
 // ========================================
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    event => {
 
         if (
             event.key === "Escape" &&
             imageModal &&
-            imageModal.style.display === "block"
+            imageModal.style.display ===
+                "flex"
         ) {
 
             closeImageModal();
@@ -634,12 +1050,11 @@ if (saveProductBtn) {
         "click",
         async () => {
 
-            // ========================================
-            // Check Login
-            // ========================================
-
-            const { data: userData } =
-                await supabaseClient.auth.getUser();
+            const {
+                data: userData
+            } =
+                await supabaseClient.auth
+                    .getUser();
 
 
             if (!userData.user) {
@@ -651,10 +1066,6 @@ if (saveProductBtn) {
                 return;
             }
 
-
-            // ========================================
-            // Get Inputs
-            // ========================================
 
             const titleInput =
                 document.getElementById(
@@ -687,10 +1098,13 @@ if (saveProductBtn) {
 
 
             // ========================================
-            // Validate
+            // Validation
             // ========================================
 
-            if (!title || !description) {
+            if (
+                !title ||
+                !description
+            ) {
 
                 alert(
                     "من فضلك اكتبي اسم المنتج والوصف"
@@ -710,11 +1124,11 @@ if (saveProductBtn) {
             }
 
 
-            // ========================================
-            // Check Image Type
-            // ========================================
-
-            if (!file.type.startsWith("image/")) {
+            if (
+                !file.type.startsWith(
+                    "image/"
+                )
+            ) {
 
                 alert(
                     "من فضلك اختاري ملف صورة صحيح"
@@ -724,15 +1138,13 @@ if (saveProductBtn) {
             }
 
 
-            // ========================================
-            // Check Image Size
-            // ========================================
-
             const maxSize =
                 5 * 1024 * 1024;
 
 
-            if (file.size > maxSize) {
+            if (
+                file.size > maxSize
+            ) {
 
                 alert(
                     "حجم الصورة كبير جدًا. الحد الأقصى 5MB."
@@ -742,11 +1154,9 @@ if (saveProductBtn) {
             }
 
 
-            // ========================================
-            // Disable Button
-            // ========================================
+            saveProductBtn.disabled =
+                true;
 
-            saveProductBtn.disabled = true;
 
             saveProductBtn.textContent =
                 "جاري النشر...";
@@ -774,28 +1184,33 @@ if (saveProductBtn) {
                     "_" +
                     Math.random()
                         .toString(36)
-                        .substring(2, 8) +
+                        .substring(
+                            2,
+                            8
+                        ) +
                     "." +
                     fileExtension;
 
 
-                const filePath =
-                    fileName;
-
-
                 // ========================================
-                // Upload Image
+                // Upload
                 // ========================================
 
-                const { error: uploadError } =
-                    await supabaseClient.storage
+                const {
+                    error: uploadError
+                } =
+                    await supabaseClient
+                        .storage
                         .from("products")
                         .upload(
-                            filePath,
+                            fileName,
                             file,
                             {
-                                cacheControl: "3600",
-                                upsert: false
+                                cacheControl:
+                                    "3600",
+
+                                upsert:
+                                    false
                             }
                         );
 
@@ -808,14 +1223,20 @@ if (saveProductBtn) {
 
 
                 // ========================================
-                // Get Public Image URL
+                // Public URL
                 // ========================================
 
-                const { data: publicUrlData } =
-                    supabaseClient.storage
-                        .from("products")
+                const {
+                    data:
+                        publicUrlData
+                } =
+                    supabaseClient
+                        .storage
+                        .from(
+                            "products"
+                        )
                         .getPublicUrl(
-                            filePath
+                            fileName
                         );
 
 
@@ -827,17 +1248,32 @@ if (saveProductBtn) {
                 // Insert Product
                 // ========================================
 
-                const { error: insertError } =
+                const {
+                    error:
+                        insertError
+                } =
                     await supabaseClient
-                        .from("products")
+                        .from(
+                            "products"
+                        )
                         .insert([
                             {
-                                name: title,
-                                description: description,
-                                image_url: imageUrl,
-                                whatsapp: "201556051932",
+
+                                name:
+                                    title,
+
+                                description:
+                                    description,
+
+                                image_url:
+                                    imageUrl,
+
+                                whatsapp:
+                                    "201556051932",
+
                                 facebook:
                                     "https://www.facebook.com/share/g/19DZh5pJpd/"
+
                             }
                         ]);
 
@@ -858,11 +1294,16 @@ if (saveProductBtn) {
                 );
 
 
-                titleInput.value = "";
+                titleInput.value =
+                    "";
 
-                descInput.value = "";
 
-                imgInput.value = "";
+                descInput.value =
+                    "";
+
+
+                imgInput.value =
+                    "";
 
 
                 addForm.style.display =
@@ -879,7 +1320,6 @@ if (saveProductBtn) {
 
                 console.error(error);
 
-
                 alert(
                     "حدث خطأ:\n" +
                     error.message
@@ -889,6 +1329,7 @@ if (saveProductBtn) {
 
                 saveProductBtn.disabled =
                     false;
+
 
                 saveProductBtn.textContent =
                     "نشر المنتج";
@@ -902,7 +1343,7 @@ if (saveProductBtn) {
 
 
 // ========================================
-// Active Navbar Link
+// Active Navbar
 // ========================================
 
 function setupActiveNavigation() {
@@ -919,7 +1360,11 @@ function setupActiveNavigation() {
         );
 
 
-    if (!sections.length || !navLinks.length) {
+    if (
+        !sections.length ||
+        !navLinks.length
+    ) {
+
         return;
     }
 
@@ -934,49 +1379,58 @@ function setupActiveNavigation() {
             window.scrollY + 180;
 
 
-        sections.forEach(section => {
+        sections.forEach(
+            section => {
 
-            const sectionTop =
-                section.offsetTop;
-
-
-            const sectionBottom =
-                sectionTop +
-                section.offsetHeight;
+                const sectionTop =
+                    section.offsetTop;
 
 
-            if (
-                scrollPosition >= sectionTop &&
-                scrollPosition < sectionBottom
-            ) {
+                const sectionBottom =
+                    sectionTop +
+                    section.offsetHeight;
 
-                currentSection =
-                    section.id;
+
+                if (
+                    scrollPosition >=
+                        sectionTop &&
+                    scrollPosition <
+                        sectionBottom
+                ) {
+
+                    currentSection =
+                        section.id;
+
+                }
 
             }
-
-        });
-
-
-        navLinks.forEach(link => {
-
-            link.classList.remove(
-                "active"
-            );
+        );
 
 
-            if (
-                link.getAttribute("href") ===
-                "#" + currentSection
-            ) {
+        navLinks.forEach(
+            link => {
 
-                link.classList.add(
+                link.classList.remove(
                     "active"
                 );
 
-            }
 
-        });
+                if (
+                    link.getAttribute(
+                        "href"
+                    ) ===
+                    "#" +
+                        currentSection
+                ) {
+
+                    link.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
 
     }
 
@@ -996,7 +1450,7 @@ function setupActiveNavigation() {
 
 
 // ========================================
-// Smooth Navigation
+// Navigation
 // ========================================
 
 function setupNavigation() {
@@ -1007,37 +1461,150 @@ function setupNavigation() {
         );
 
 
-    navLinks.forEach(link => {
+    navLinks.forEach(
+        link => {
 
-        link.addEventListener(
-            "click",
-            () => {
+            link.addEventListener(
+                "click",
+                () => {
 
-                navLinks.forEach(
-                    navLink => {
+                    navLinks.forEach(
+                        navLink => {
 
-                        navLink.classList.remove(
-                            "active"
+                            navLink.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    link.classList.add(
+                        "active"
+                    );
+
+
+                    // Close mobile menu
+
+                    if (
+                        mainNav
+                    ) {
+
+                        mainNav.classList.remove(
+                            "open"
                         );
 
                     }
-                );
 
 
-                link.classList.add(
-                    "active"
-                );
+                    if (
+                        menuToggle
+                    ) {
 
-            }
-        );
+                        menuToggle.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
 
-    });
+                    }
+
+                }
+            );
+
+        }
+    );
 
 }
 
 
 // ========================================
-// Initialize Website
+// Mobile Menu
+// ========================================
+
+function setupMobileMenu() {
+
+    if (
+        !menuToggle ||
+        !mainNav
+    ) {
+
+        return;
+    }
+
+
+    menuToggle.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                mainNav.classList.toggle(
+                    "open"
+                );
+
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        }
+    );
+
+}
+
+
+// ========================================
+// Close Mobile Menu Outside
+// ========================================
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !menuToggle ||
+            !mainNav
+        ) {
+
+            return;
+        }
+
+
+        const clickedInsideMenu =
+            mainNav.contains(
+                event.target
+            );
+
+
+        const clickedButton =
+            menuToggle.contains(
+                event.target
+            );
+
+
+        if (
+            !clickedInsideMenu &&
+            !clickedButton
+        ) {
+
+            mainNav.classList.remove(
+                "open"
+            );
+
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+// ========================================
+// Initialize
 // ========================================
 
 document.addEventListener(
@@ -1051,6 +1618,8 @@ document.addEventListener(
         setupActiveNavigation();
 
         setupNavigation();
+
+        setupMobileMenu();
 
         await checkUser();
 
