@@ -1,7 +1,3 @@
-// ========================================
-// Supabase
-// ========================================
-
 const SUPABASE_URL = "https://xqsdrgtlkwpzzstoches.supabase.co";
 const SUPABASE_KEY = "sb_publishable_a-DKrUN4Dj8Xq14m3sNvfQ_RWp1YaII";
 
@@ -602,9 +598,7 @@ if (saveProductBtn) {
 
                 return;
             }
-
-
-            const titleInput =
+             const titleInput =
                 document.getElementById(
                     "product-title"
                 );
@@ -805,8 +799,6 @@ if (saveProductBtn) {
 
                 addForm.style.display =
                     "none";
-
-
                 addFormBtn.textContent =
                     "+ إضافة منتج جديد";
 
@@ -990,3 +982,4 @@ document.addEventListener(
 
     }
 );
+
